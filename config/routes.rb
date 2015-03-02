@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'users/new'
+
   match '/help',to:'default#help',via:'get'
   match '/home',to:'default#home',via:'get'
   match '/about',to:'default#about',via:'get'
