@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'users/new'
-
   match '/help',to:'default#help',via:'get'
   match '/home',to:'default#home',via:'get'
   match '/about',to:'default#about',via:'get'
@@ -11,7 +9,10 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'default#home'
-
+  
+  resources :users  
+  match '/signup',to:'users#new',via:'get'
+  
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
