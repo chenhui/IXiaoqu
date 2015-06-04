@@ -5,13 +5,20 @@ RSpec.describe User, :type => :model do
 	before { @user = User.new(name:"chenhui",email:"chenhui@sohu.com",password:"foobar",password_confirmation:"foobar")}
 
 	subject { @user }
+
 	it { should respond_to(:name)}
 	it { should respond_to(:email)}
 	it { should respond_to(:password)}
 	it { should respond_to(:password_confirmation)}
 	it { should respond_to(:password_digest) }
+	it { should respond_to(:remember_token) }
 	it { should respond_to(:authenticate) }
 	it { should be_valid}
+
+	describe  "remember token" do
+		before { @user.save }	
+		it{ expect(@user.remember_token).not_to  be_blank }
+	end
 
 	describe "when password is not present" do
 		before do

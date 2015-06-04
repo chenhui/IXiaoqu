@@ -1,22 +1,8 @@
 <!DOCTYPE html>
 <html>
   <%= render 'layouts/header' %>
-	<body>
-		<nav class="navbar navbar-fixed-top navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">
-						<img alt="滨文苑" src="...">
-					</a>
-				</div>
-				<ul class="nav navbar-nav pull-right">
-					<li><%= link_to "首页",home_path %></li>
-					<li><%= link_to "帮助",help_path %></li>
-					<li><%= link_to "登录","#" %></li>
-					<li><%= link_to "注册",signup_path %></li>
-				</ul>
-			</div>
-		</nav>
+ 	<body>
+ 		<%= render 'layouts/nav' %>
 		<div class="container" >
 			<% flash.each do |key,value| %>
 				<div class="alert alert-<%= key %>"><%=value%></div>
