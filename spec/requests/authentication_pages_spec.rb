@@ -15,13 +15,14 @@ RSpec.describe "AuthenticationPages", :type => :request do
 
 				click_button "登录"
 			end
+			
 			it {should have_title(user.name)}
-			it {should have_link('Profile',href:user_path(user))}
-			it {should have_link('Sign out',href:signout_path)}
+			it {should have_link('个人资料',href:user_path(user))}
+			it {should have_link('退出',href:signout_path)}
 			it {should_not have_link('登录',href:signin_path)}
 
 			describe "followed by signout" do 
-				before { click_link "Sign out"}
+				before { click_link "退出"}
 				it { should have_link('登录')}
 					
 			end

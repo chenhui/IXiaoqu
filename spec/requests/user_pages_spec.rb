@@ -38,11 +38,30 @@ RSpec.describe "User pages", :type => :request do
 				before { click_button  submit}	
 				let(:user) { User.find_by(email:'chenhui@sohu.com')}
 
-				it { should have_link('Sign out') }
+				it { should have_link('退出') }
 				it { should have_title(user.name) }
 				it { should have_selector('div.alert.alert-success',text:'Welcome')}
 			end
 			
+		end
+	end
+	
+	describe "edit" do
+		let(:user) { FactoryGirl.create(:user) }
+		before do
+			visit edit_user_path(user) 
+		end 
+		
+			
+		describe "page" do
+			it { should have_content("编辑个人资料") }
+			it { should have_title("Edit user") }
+			it { should have_link('change', href: 'http://gravatar.com/emails') }
+		end
+		
+		describe "with invalid information" do
+			before  { click_button "保存" }
+			it { should have_content("short") }
 		end
 	end
 
