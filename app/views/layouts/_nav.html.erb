@@ -16,7 +16,7 @@
 				</a>
 				<ul class="dropdown-menu" role="menu">
 					<li role="presentation"><%= link_to "个人资料", current_user %></li>
-					<li role="presentation"><%= link_to "设置", '#' %></li>
+					<li role="presentation"><%= link_to "设置", edit_user_path(current_user) %></li>
 					<li role="presentation" class="divider"></li>
 					<li>
 						<%= link_to "退出", signout_path, method: "delete" %>

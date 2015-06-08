@@ -49,6 +49,7 @@ RSpec.describe "User pages", :type => :request do
 	describe "edit" do
 		let(:user) { FactoryGirl.create(:user) }
 		before do
+			sign_in  user
 			visit edit_user_path(user) 
 		end 
 		
@@ -63,6 +64,23 @@ RSpec.describe "User pages", :type => :request do
 			before  { click_button "保存" }
 			it { should have_content("short") }
 		end
-	end
 
+		describe "with valid information" do
+			let(:new_name)	{ "New Name"}
+			let(:new_email){ "new@sohu.com"}
+			before do
+				fill_in "姓名"	,with:new_name
+				fill_in "邮件",with:new_email
+				fill_in "密码",with:"foobarfoobar"
+				fill_in "确认密码",with:"foobarfoobar"
+				click_button "保存"
+			end
+			it { should have_title(new_name)}
+			it { should have_selector('div.alert.alert-success')}
+			it  { should have_link("退出",href:signout_path)}
+
+			specify{ expect(user.reload.name).to eq new_name }
+			specify{ expect(user.reload.email).to eq new_email }
+			end
+		end
 end
