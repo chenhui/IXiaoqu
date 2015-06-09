@@ -81,6 +81,23 @@ RSpec.describe "User pages", :type => :request do
 
 			specify{ expect(user.reload.name).to eq new_name }
 			specify{ expect(user.reload.email).to eq new_email }
+		end
+	end
+	
+	describe "index" do
+		before do
+			sign_in FactoryGirl.create(:user)
+			FactoryGirl.create(:user,name:"Bob",email:"bob@sohu.com")
+			FactoryGirl.create(:user,name:"ben",email:"ben@sohu.com")
+			visit users_path
+		end	
+		it { should have_title("所有用户")	}
+		it { should have_content("所有用户") }
+		
+		it "should list each user"	do
+			User.all.each do |user|
+				expect(page).to have_selector('li',text:user.name)
 			end
 		end
+	end
 end

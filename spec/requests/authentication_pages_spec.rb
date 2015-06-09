@@ -17,6 +17,7 @@ RSpec.describe "AuthenticationPages", :type => :request do
 			
 			it {should have_title(user.name)}
 			it {should have_link('个人资料',href:user_path(user))}
+			it {should have_link('用户',href:users_path) }
 			it {should have_link('退出',href:signout_path)}
 			it {should_not have_link('登录',href:signin_path)}
 
@@ -58,6 +59,11 @@ RSpec.describe "AuthenticationPages", :type => :request do
 				describe "submitting to the update action" do
 					before { patch user_path(user)}	
 					specify { expect(response).to redirect_to(signin_path)}
+				end
+				
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { should have_title('登录') }
 				end
 			end
 

@@ -7,6 +7,7 @@ gem 'rails', '4.2.0'
 gem 'sqlite3',group: :development
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'sprockets-rails'
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
 gem 'bcrypt'          
@@ -16,6 +17,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer'
 gem 'execjs'
+gem 'faker'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
