@@ -95,21 +95,25 @@ RSpec.describe "User pages", :type => :request do
 		it { should have_content("所有用户") }
 		
 		describe "pagination" do
-			before(:all){30.times{FactoryGirl.create(:user)}}
+			before(:all){5.times{FactoryGirl.create(:user)}}
 			after(:all){User.delete_all}
-			it { should have_selector('div.pagination')}	
+			
+			# it { should have_selector('div.pagination')}	
+			
 			
 			it "should list each user" do
 				User.paginate(page:1).each  do |user|
 					expect(page).to have_selector('li',text:user.name)
 				end
 			end
+			
+
 		end
-		
-		it "should list each user"	do
-			User.all.each do |user|
-				expect(page).to have_selector('li',text:user.name)
-			end
-		end
+			it "should list each user"	do
+				User.all.each do |user|
+					expect(page).to have_selector('li',text:user.name)
+				end
+			end	
+
 	end
 end
