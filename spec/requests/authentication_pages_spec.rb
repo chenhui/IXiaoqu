@@ -66,6 +66,19 @@ RSpec.describe "AuthenticationPages", :type => :request do
 					it { should have_title('登录') }
 				end
 			end
+			
+			describe "in the microposts controller" do
+				
+				describe "submitting to the creation action"	do
+					before { post microposts_path }
+					specify { expect(response).to redirect_to(signin_path)}
+				end
+				
+				describe "submitting to the delete action" do
+					before { delete micropost_path(FactoryGirl.create(:micropost))}
+					specify { expect(response).to redirect_to(signin_path)}
+				end
+			end
 
 			describe "when attempting to visit a protected page" do
 				before do
@@ -83,7 +96,7 @@ RSpec.describe "AuthenticationPages", :type => :request do
 				end
 
 			end
-
+			
 		end
 
 

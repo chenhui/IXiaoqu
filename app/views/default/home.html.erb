@@ -1,2 +1,21 @@
 <% provide(:title,"首页") %>
-<h1>首页</h1>
+<% if signed_in? %>
+    <div class="row">
+        <aside class="col-md-4">
+        <section>
+        <%= render 'shared/user_info' %>
+        </section>
+        <section>
+        <%= render 'shared/micropost_form' %>
+        </section>
+        </aside>
+    </div>
+<% else %>
+    <div class="center hero-unit">
+        <h1>首页  滨文苑-我们的家园</h1>
+        <br>
+        <br>
+        <%= link_to "请注册!", signup_path,
+        class: "btn btn-large btn-primary" %>
+    </div>
+<% end %>
