@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'default#home'
   
-  resources :users  
+  resources :users do
+    member do
+      get :following, :followers 
+    end
+  end 
   match '/signup',to:'users#new',via:'get'
 
   resources :sessions, only:[:new,:create,:destroy]
@@ -18,6 +22,7 @@ Rails.application.routes.draw do
   match '/signout',to:'sessions#destroy',via:'delete'
   
   resources :microposts,only:[:create,:destroy]
+  resources :relationships,only:[:create,:destroy]
   
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

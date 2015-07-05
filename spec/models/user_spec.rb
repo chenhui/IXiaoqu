@@ -17,6 +17,14 @@ RSpec.describe User, :type => :model do
 	it { should respond_to(:microposts)}
 	
 	it { should respond_to(:feed) }
+	it { should respond_to(:relationships)}
+	it { should respond_to(:followed_users) }
+	it { should respond_to(:follow!)}
+	it { should respond_to(:unfollowing!) }
+	it { should respond_to(:reverse_relationships)}
+	it { should respond_to(:followers) }
+	
+	
 	it { should be_valid}
 	it { should_not be_admin}
 
@@ -154,17 +162,59 @@ RSpec.describe User, :type => :model do
 			end
 		end
 		
-		let(:unfollowed_post) do
-			FactoryGirl.create(:micropost,user:FactoryGirl.create(:user))
-		end
+
 		
-		it "should have right feeds " do
-			feeds=@user.feed
-			expect(feeds).to include newer_micropost
-			expect(feeds).to include older_micropost
-			expect(feeds).not_to include unfollowed_post 
+		describe "status" do
+			
+			let(:unfollowed_post) do
+				FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+			end
+			let(:followed_user) { FactoryGirl.create(:user) }
+			before do
+				@user.follow!(followed_user)
+				3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
+			end
+			
+			it "feed should have right microposts" do
+				feeds=@user.feed
+				expect(feeds).to include newer_micropost
+				expect(feeds).to include older_micropost
+				expect(feeds).not_to include unfollowed_post 
+			
+			followed_user.microposts.each do |micropost|
+				expect(feeds).to include(micropost)
+			end
+		end
 		end
 	end
 	
+	describe "following" do
+		let(:other_user) { FactoryGirl.create(:user) }
+		before do
+			@user.save
+			@user.follow!(other_user)
+		end	
+		it { should be_following(other_user)}
+		
+		it "shold have followed users" do
+			expect(@user.followed_users).to include other_user
+		end
+		
+		describe "and unfollowing" do
+			before { @user.unfollowing!(other_user) }
+			it {should_not be_following(other_user) }
+			it "shoud not have followed users" do
+				expect(@user.followed_users).not_to  include other_user
+			end
+		end
+		
+		describe "followed user" do
+			subject { other_user }
+			
+			it "should be following by user" do
+				expect(other_user.followers).to include @user
+			end
+		end
+	end
 
 end
